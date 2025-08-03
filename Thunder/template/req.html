@@ -2,89 +2,94 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{{ heading }}</title>
 
   <!-- Meta -->
-  <meta name="description" content="Stream Telegram Movies - TgTamilLinks powered by LoveToRide" />
+  <meta name="description" content="Stream and share Telegram files easily with TgTamilLinks powered by LoveToRide." />
   <meta name="theme-color" content="#111827" />
 
-  <!-- Icons -->
+  <!-- Branding -->
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg" />
+  <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg" />
 
-  <!-- Fonts -->
+  <!-- Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <!-- Video.js CSS -->
-  <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
-
-  <!-- FontAwesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <!-- Player -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
 
   <style>
     body {
       margin: 0;
+      font-family: 'Inter', sans-serif;
       background: #111827;
       color: #e5e7eb;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 2rem auto;
       padding: 0 1rem;
     }
 
-    h1 {
-      font-size: 1.6rem;
+    .container {
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem 1rem;
+    }
+
+    header {
       text-align: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
       color: #fff;
     }
 
-    .brand {
-      text-align: center;
+    .brand-sub {
       font-size: 0.9rem;
       color: #9ca3af;
-      margin-bottom: 1.5rem;
       border-top: 1px solid #333;
       padding-top: 0.3rem;
     }
 
-    .video-js {
+    video {
       width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
     }
 
     .actions {
-      text-align: center;
       margin-top: 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
     }
 
     .button {
       background: transparent;
-      color: #facc15;
+      color: #e5e7eb;
+      padding: 0.75rem 1rem;
       border: none;
+      border-bottom: 2px solid #6b7280;
       font-weight: 500;
-      border-bottom: 2px solid #facc15;
-      margin: 0 0.5rem;
-      padding: 0.6rem 1rem;
       cursor: pointer;
+      transition: border-color 0.3s;
     }
 
     .button:hover {
-      opacity: 0.9;
+      border-color: #facc15;
     }
 
     footer {
       text-align: center;
+      margin-top: 3rem;
       font-size: 0.85rem;
       color: #6b7280;
-      margin-top: 3rem;
-      padding-top: 1rem;
       border-top: 1px solid #2e2e2e;
+      padding-top: 1rem;
     }
 
     a {
@@ -106,51 +111,45 @@
       font-size: 0.9rem;
       z-index: 1000;
     }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 1.3rem;
+      }
+
+      .button {
+        flex: 1 1 100%;
+        text-align: center;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>{{ file_name }}</h1>
-    <div class="brand">TgTamilLinks <span style="color:#facc15;">powered by LoveToRide</span></div>
+    <header>
+      <h1>{{ file_name }}</h1>
+      <div class="brand-sub">TgTamilLinks <span style="color:#facc15;">powered by LoveToRide</span></div>
+    </header>
 
-    <!-- Video Player -->
-    <video
-      id="movie-player"
-      class="video-js vjs-default-skin"
-      controls
-      preload="auto"
-      data-setup='{}'
-      playsinline
-      controlsList="nodownload"
-    >
+    <video id="player" controls playsinline preload="metadata" controlsList="nodownload">
       <source src="{{ src }}" type="video/mp4" />
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript, or <a href="{{ src }}" target="_blank">download the video</a>.
-      </p>
+      <p>Your browser doesn't support video. <a href="{{ src }}">Download instead</a>.</p>
     </video>
 
-    <!-- Buttons -->
     <div class="actions">
-      <button class="button" onclick="window.open('{{ src }}', '_blank')">
-        <i class="fas fa-play-circle"></i> Stream
-      </button>
-      <button class="button" onclick="window.location.href='{{ src }}'">
-        <i class="fas fa-download"></i> Download
-      </button>
-      <button class="button" onclick="copyLink('{{ src }}')">
-        <i class="fas fa-copy"></i> Copy Link
-      </button>
+      <button class="button" onclick="window.open('{{ src }}', '_blank')"><i class="fas fa-play-circle"></i> Stream</button>
+      <button class="button" onclick="window.location.href='{{ src }}'"><i class="fas fa-download"></i> Download</button>
+      <button class="button" onclick="copyLink('{{ src }}')"><i class="fas fa-copy"></i> Copy Link</button>
     </div>
 
     <footer>
-      ⚡ TgTamilLinks © <span id="year"></span> — powered by <a href="https://t.me/LoveToRide" target="_blank">LoveToRide</a>
+      ⚡ <strong>TgTamilLinks</strong> © <span id="year"></span> — powered by <a href="https://t.me/LoveToRide" target="_blank">LoveToRide</a>
     </footer>
   </div>
 
   <div class="toast" id="toast">Link copied to clipboard</div>
 
-  <!-- Scripts -->
-  <script src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js" defer></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -162,8 +161,8 @@
       });
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      videojs('movie-player');
+    document.addEventListener('DOMContentLoaded', () => {
+      new Plyr('#player');
     });
   </script>
 </body>
