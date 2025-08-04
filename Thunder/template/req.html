@@ -15,6 +15,7 @@
 
   <!-- Video.js CDN -->
   <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+  <link href="https://unpkg.com/@videojs/themes@1.0.2/dist/city/index.css" rel="stylesheet" />
   <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
 
   <style>
@@ -144,6 +145,7 @@
       controls
       preload="auto"
       data-setup='{}'
+      poster="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg"
     >
       <source src="{{ src }}" type="video/mp4" />
       <p class="vjs-no-js">
@@ -167,6 +169,7 @@
   <!-- Icons -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+  <!-- JS -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -177,6 +180,11 @@
         setTimeout(() => toast.style.display = 'none', 2000);
       });
     }
+
+    // Initialize Video.js
+    document.addEventListener("DOMContentLoaded", function () {
+      var player = videojs('player');
+    });
   </script>
 
 </body>
