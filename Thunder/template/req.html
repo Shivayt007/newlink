@@ -3,20 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ heading }}</title>
+  <title>{{ file_name }}</title>
 
-  <!-- Meta -->
-  <meta name="description" content="Stream and share Telegram files easily with TgTamilLinks powered by LoveToRide." />
-  <meta name="theme-color" content="#0f172a" />
-
-  <!-- Branding & Fonts -->
-  <link rel="icon" href="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet"/>
-
-  <!-- Video.js CDN -->
-  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-  <link href="https://unpkg.com/@videojs/themes@1.0.2/dist/city/index.css" rel="stylesheet" />
-  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+  <!-- Fonts & Styling -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
 
   <style>
     body {
@@ -51,11 +41,12 @@
       padding-top: 0.3rem;
     }
 
-    .video-js {
+    video {
       width: 100%;
       height: auto;
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+      background: #000;
     }
 
     .actions {
@@ -95,25 +86,6 @@
       padding-top: 1rem;
     }
 
-    .toast {
-      display: none;
-      position: fixed;
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #1e293b;
-      color: #fff;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      z-index: 1000;
-    }
-
-    a {
-      color: #facc15;
-      text-decoration: none;
-    }
-
     @media (max-width: 640px) {
       h1 {
         font-size: 1.5rem;
@@ -139,24 +111,11 @@
       <div class="brand-sub">TgTamilLinks — <span style="color:#facc15;">powered by LoveToRide</span></div>
     </header>
 
-    <video
-      id="player"
-      class="video-js vjs-theme-city"
-      controls
-      preload="auto"
-      data-setup='{}'
-      poster="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg"
-    >
-      <source src="{{ src }}" type="video/mp4" />
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript... or <a href="{{ src }}">download here</a>.
-      </p>
-    </video>
+    <video id="video" controls autoplay></video>
 
     <div class="actions">
-      <button class="button" onclick="window.open('{{ src }}', '_blank')"><i class="fas fa-play-circle"></i> Stream</button>
-      <button class="button" onclick="window.location.href='{{ src }}'"><i class="fas fa-download"></i> Download</button>
-      <button class="button" onclick="copyLink('{{ src }}')"><i class="fas fa-copy"></i> Copy Link</button>
+      <button class="button" onclick="window.open('{{ dash_url }}', '_blank')">🔗 Open .mpd</button>
+      <button class="button" onclick="copyLink('{{ dash_url }}')">📋 Copy Link</button>
     </div>
 
     <footer>
@@ -164,12 +123,11 @@
     </footer>
   </div>
 
-  <div class="toast" id="toast">Link copied to clipboard ✅</div>
+  <div class="toast" id="toast" style="display:none; position:fixed; bottom:1rem; left:50%; transform:translateX(-50%); background:#1e293b; color:#fff; padding:0.75rem 1rem; border-radius:6px; font-size:0.9rem;">Link copied to clipboard ✅</div>
 
-  <!-- Icons -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Shaka Player -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.6/shaka-player.compiled.min.js"></script>
 
-  <!-- JS -->
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -181,11 +139,20 @@
       });
     }
 
-    // Initialize Video.js
-    document.addEventListener("DOMContentLoaded", function () {
-      var player = videojs('player');
+    document.addEventListener('DOMContentLoaded', async () => {
+      const video = document.getElementById('video');
+      const player = new shaka.Player(video);
+
+      // Replace with actual .mpd URL dynamically
+      const manifestUri = '{{ temp_url }}';
+
+      try {
+        await player.load(manifestUri);
+        console.log('The video has now been loaded!');
+      } catch (error) {
+        console.error('Error loading video', error);
+      }
     });
   </script>
-
 </body>
 </html>
