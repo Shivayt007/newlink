@@ -3,104 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ file_name }}</title>
+  <title>{{ heading }}</title>
 
-  <!-- Fonts & Styling -->
+  <!-- Meta -->
+  <meta name="description" content="Stream Telegram Movies - TgTamilLinks powered by LoveToRide" />
+  <meta name="theme-color" content="#111827" />
+
+  <!-- Icons -->
+  <link rel="icon" href="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg" />
+
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+
+  <!-- Video.js CSS -->
+  <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
+
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
     body {
       margin: 0;
+      background: #111827;
+      color: #e5e7eb;
       font-family: 'Inter', sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      padding: 1rem;
     }
 
     .container {
-      max-width: 800px;
-      margin: auto;
-      padding-top: 2rem;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 1.5rem;
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
     }
 
     h1 {
       font-size: 1.6rem;
+      text-align: center;
+      margin-bottom: 0.5rem;
       color: #fff;
     }
 
-    .brand-sub {
+    .brand {
+      text-align: center;
       font-size: 0.9rem;
-      color: #64748b;
-      margin-top: 0.3rem;
-      border-top: 1px solid #334155;
+      color: #9ca3af;
+      margin-bottom: 1.5rem;
+      border-top: 1px solid #333;
       padding-top: 0.3rem;
     }
 
     .video-js {
       width: 100%;
-      min-height: 260px;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
-      background-color: #000;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
     }
 
     .actions {
+      text-align: center;
       margin-top: 1.5rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
     }
 
     .button {
-      background-color: #1e293b;
-      color: #f8fafc;
+      background: transparent;
+      color: #facc15;
       border: none;
-      border-radius: 6px;
-      padding: 0.75rem 1.25rem;
       font-weight: 500;
+      border-bottom: 2px solid #facc15;
+      margin: 0 0.5rem;
+      padding: 0.6rem 1rem;
       cursor: pointer;
-      font-size: 0.95rem;
-      transition: background 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
     }
 
     .button:hover {
-      background-color: #facc15;
-      color: #000;
+      opacity: 0.9;
     }
 
     footer {
-      margin-top: 3rem;
       text-align: center;
       font-size: 0.85rem;
-      color: #94a3b8;
-      border-top: 1px solid #334155;
+      color: #6b7280;
+      margin-top: 3rem;
       padding-top: 1rem;
+      border-top: 1px solid #2e2e2e;
     }
 
-    @media (max-width: 640px) {
-      h1 {
-        font-size: 1.4rem;
-      }
-
-      .actions {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .button {
-        width: 100%;
-        justify-content: center;
-      }
+    a {
+      color: #facc15;
+      text-decoration: none;
+      border-bottom: 1px dotted #facc15;
     }
 
     .toast {
@@ -109,56 +99,58 @@
       bottom: 1rem;
       left: 50%;
       transform: translateX(-50%);
-      background: #1e293b;
+      background: #1f2937;
       color: #fff;
       padding: 0.75rem 1rem;
       border-radius: 6px;
       font-size: 0.9rem;
+      z-index: 1000;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <header>
-      <h1>{{ file_name }}</h1>
-      <div class="brand-sub">TgTamilLinks — <span style="color:#facc15;">powered by LoveToRide</span></div>
-    </header>
+    <h1>{{ file_name }}</h1>
+    <div class="brand">TgTamilLinks <span style="color:#facc15;">powered by LoveToRide</span></div>
 
     <!-- Video Player -->
     <video
-      id="player"
+      id="movie-player"
       class="video-js vjs-default-skin"
       controls
       preload="auto"
       data-setup='{}'
-      poster=""
+      playsinline
+      controlsList="nodownload"
     >
-      <source src="{{ src }}" type="video/x-matroska" />
+      <source src="{{ src }}" type="video/mp4" />
       <p class="vjs-no-js">
-        This browser does not support MKV playback. 
-        <a href="{{ src }}">Click here to download</a>.
+        To view this video please enable JavaScript, or <a href="{{ src }}" target="_blank">download the video</a>.
       </p>
     </video>
 
     <!-- Buttons -->
     <div class="actions">
-      <button class="button" onclick="window.open('{{ src }}', '_blank')">▶ Stream</button>
-      <button class="button" onclick="window.location.href='{{ src }}'">⬇️ Download</button>
-      <button class="button" onclick="copyLink('{{ src }}')">📋 Copy Link</button>
+      <button class="button" onclick="window.open('{{ src }}', '_blank')">
+        <i class="fas fa-play-circle"></i> Stream
+      </button>
+      <button class="button" onclick="window.location.href='{{ src }}'">
+        <i class="fas fa-download"></i> Download
+      </button>
+      <button class="button" onclick="copyLink('{{ src }}')">
+        <i class="fas fa-copy"></i> Copy Link
+      </button>
     </div>
 
-    <!-- Footer -->
     <footer>
-      ⚡ <strong>TgTamilLinks</strong> © <span id="year"></span> — powered by <a href="https://t.me/LoveToRide" target="_blank">LoveToRide</a>
+      ⚡ TgTamilLinks © <span id="year"></span> — powered by <a href="https://t.me/LoveToRide" target="_blank">LoveToRide</a>
     </footer>
   </div>
 
-  <!-- Toast -->
-  <div class="toast" id="toast">Link copied to clipboard ✅</div>
+  <div class="toast" id="toast">Link copied to clipboard</div>
 
   <!-- Scripts -->
-  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+  <script src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -169,6 +161,10 @@
         setTimeout(() => toast.style.display = 'none', 2000);
       });
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      videojs('movie-player');
+    });
   </script>
 </body>
 </html>
