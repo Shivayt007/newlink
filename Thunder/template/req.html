@@ -13,133 +13,240 @@
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg" />
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- Video.js CSS -->
-  <link href="https://vjs.zencdn.net/8.9.0/video-js.css" rel="stylesheet" />
+  <!-- Plyr.io CSS - Modern video player -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
 
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
   <style>
+    :root {
+      --primary-color: #f59e0b;
+      --primary-hover: #fbbf24;
+      --bg-color: #111827;
+      --card-bg: #1f2937;
+      --text-color: #e5e7eb;
+      --text-muted: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      background: #111827;
-      color: #e5e7eb;
-      font-family: 'Inter', sans-serif;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.6;
     }
 
     .container {
-      max-width: 900px;
-      margin: 2rem auto;
-      padding: 0 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.5rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     h1 {
-      font-size: 1.6rem;
-      text-align: center;
-      margin-bottom: 0.5rem;
-      color: #fff;
+      font-size: 1.8rem;
+      margin: 0.5rem 0;
+      color: white;
+      font-weight: 600;
+      line-height: 1.3;
     }
 
     .brand {
-      text-align: center;
+      display: inline-block;
       font-size: 0.9rem;
-      color: #9ca3af;
-      margin-bottom: 1.5rem;
-      border-top: 1px solid #333;
-      padding-top: 0.3rem;
+      color: var(--text-muted);
+      background: rgba(245, 158, 11, 0.1);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-top: 0.5rem;
     }
 
-    .video-js {
-      width: 100%;
-      height: auto;
+    .brand span {
+      color: var(--primary-color);
+    }
+
+    .player-container {
+      position: relative;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.5rem;
+      background: #000;
+    }
+
+    .plyr {
+      border-radius: 12px;
+      overflow: hidden;
     }
 
     .actions {
-      text-align: center;
-      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 2rem 0;
     }
 
-    .button {
-      background: transparent;
-      color: #facc15;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--primary-color);
       border: none;
       font-weight: 500;
-      border-bottom: 2px solid #facc15;
-      margin: 0 0.5rem;
-      padding: 0.6rem 1rem;
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
       cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
     }
 
-    .button:hover {
-      opacity: 0.9;
+    .btn:hover {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn i {
+      font-size: 1.1rem;
+    }
+
+    .info-box {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 2rem 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-box h3 {
+      margin-top: 0;
+      color: white;
+      font-size: 1.2rem;
     }
 
     footer {
       text-align: center;
       font-size: 0.85rem;
-      color: #6b7280;
+      color: var(--text-muted);
       margin-top: 3rem;
-      padding-top: 1rem;
-      border-top: 1px solid #2e2e2e;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     a {
-      color: #facc15;
+      color: var(--primary-color);
       text-decoration: none;
-      border-bottom: 1px dotted #facc15;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
     }
 
     .toast {
       display: none;
       position: fixed;
-      bottom: 1rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
-      background: #1f2937;
-      color: #fff;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
+      background: var(--card-bg);
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
       font-size: 0.9rem;
       z-index: 1000;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      h1 {
+        font-size: 1.5rem;
+      }
+      
+      .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Quality selector for mobile */
+    .plyr__menu__container [data-plyr="quality"] {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .plyr__menu__container [data-plyr="quality"] {
+        display: block;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>{{ file_name }}</h1>
-    <div class="brand">TgTamilLinks <span style="color:#facc15;">powered by LoveToRide</span></div>
+    <header>
+      <h1>{{ file_name }}</h1>
+      <div class="brand">TgTamilLinks <span>powered by LoveToRide</span></div>
+    </header>
 
-    <!-- Video Player -->
-    <video
-      id="movie-player"
-      class="video-js vjs-default-skin"
-      controls
-      preload="auto"
-      data-setup='{}'
-      playsinline
-      controlsList="nodownload"
-    >
-      <source src="{{ src }}" type="video/mp4" />
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript, or <a href="{{ src }}" target="_blank">download the video</a>.
-      </p>
-    </video>
+    <!-- Video Player Container -->
+    <div class="player-container">
+      <video id="player" playsinline controls>
+        <source src="{{ src }}" type="video/mp4" />
+        <!-- Fallback for browsers that don't support the video element -->
+        <a href="{{ src }}" download>Download video</a>
+      </video>
+    </div>
 
-    <!-- Buttons -->
+    <!-- Video Actions -->
     <div class="actions">
-      <button class="button" onclick="window.open('{{ src }}', '_blank')">
-        <i class="fas fa-play-circle"></i> Stream
+      <button class="btn" onclick="window.open('{{ src }}', '_blank')">
+        <i class="fas fa-external-link-alt"></i> Open in New Tab
       </button>
-      <button class="button" onclick="window.location.href='{{ src }}'">
+      <button class="btn" onclick="window.location.href='{{ src }}'">
         <i class="fas fa-download"></i> Download
       </button>
-      <button class="button" onclick="copyLink('{{ src }}')">
+      <button class="btn" onclick="copyLink('{{ src }}')">
         <i class="fas fa-copy"></i> Copy Link
       </button>
+      <button class="btn" onclick="toggleFullScreen()">
+        <i class="fas fa-expand"></i> Fullscreen
+      </button>
+    </div>
+
+    <!-- Info Box -->
+    <div class="info-box">
+      <h3>Streaming Tips</h3>
+      <p>For best experience, use a high-speed internet connection. If video buffers, try pausing for a few moments to allow it to load.</p>
+      <p>Press <kbd>Space</kbd> to play/pause, <kbd>F</kbd> for fullscreen, <kbd>M</kbd> to mute.</p>
     </div>
 
     <footer>
@@ -147,23 +254,111 @@
     </footer>
   </div>
 
-  <div class="toast" id="toast">Link copied to clipboard</div>
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Link copied to clipboard!</div>
 
   <!-- Scripts -->
-  <script src="https://vjs.zencdn.net/8.9.0/video.min.js"></script>
+  <!-- Plyr.io JS - Modern video player -->
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  
   <script>
+    // Set current year
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // Initialize Plyr video player
+    const player = new Plyr('#player', {
+      controls: [
+        'play-large', // The large play button in the center
+        'restart', // Restart playback
+        'rewind', // Rewind by the seek time (default 10 seconds)
+        'play', // Play/pause playback
+        'fast-forward', // Fast forward by the seek time (default 10 seconds)
+        'progress', // The progress bar and scrubber for playback and buffering
+        'current-time', // The current time of playback
+        'duration', // The full duration of the media
+        'mute', // Toggle mute
+        'volume', // Volume control
+        'captions', // Toggle captions
+        'settings', // Settings menu
+        'pip', // Picture-in-picture (currently Safari only)
+        'airplay', // Airplay (currently Safari only)
+        'fullscreen', // Toggle fullscreen
+      ],
+      settings: ['quality', 'speed'],
+      keyboard: { focused: true, global: true },
+      tooltips: { controls: true, seek: true },
+      seekTime: 10,
+      volume: 0.7,
+      debug: false
+    });
+
+    // Handle fullscreen button
+    function toggleFullScreen() {
+      if (player.fullscreen.active) {
+        player.fullscreen.exit();
+      } else {
+        player.fullscreen.enter();
+      }
+    }
+
+    // Copy link function with toast notification
     function copyLink(url) {
       navigator.clipboard.writeText(url).then(() => {
         const toast = document.getElementById('toast');
         toast.style.display = 'block';
-        setTimeout(() => toast.style.display = 'none', 2000);
+        setTimeout(() => {
+          toast.style.display = 'none';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy: ', err);
+        // Fallback for older browsers
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+          document.execCommand('copy');
+          const toast = document.getElementById('toast');
+          toast.textContent = 'Link copied to clipboard!';
+          toast.style.display = 'block';
+          setTimeout(() => {
+            toast.style.display = 'none';
+          }, 2000);
+        } catch (err) {
+          const toast = document.getElementById('toast');
+          toast.textContent = 'Failed to copy link';
+          toast.style.display = 'block';
+          setTimeout(() => {
+            toast.style.display = 'none';
+          }, 2000);
+        }
+        document.body.removeChild(textarea);
       });
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      videojs('movie-player');
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      // Don't trigger if typing in an input field
+      if (document.activeElement.tagName === 'INPUT') return;
+      
+      switch (e.key.toLowerCase()) {
+        case ' ':
+          e.preventDefault();
+          player.togglePlay();
+          break;
+        case 'f':
+          toggleFullScreen();
+          break;
+        case 'm':
+          player.muted = !player.muted;
+          break;
+        case 'arrowleft':
+          player.rewind();
+          break;
+        case 'arrowright':
+          player.forward();
+          break;
+      }
     });
   </script>
 </body>
