@@ -144,7 +144,7 @@
       const player = new shaka.Player(video);
 
       // Replace with actual .mpd URL dynamically
-      const manifestUri = '{{ temp_url }}';
+      const manifestUri = '{{ src }}';
 
       try {
         await player.load(manifestUri);
@@ -156,3 +156,4 @@
   </script>
 </body>
 </html>
+
