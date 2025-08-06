@@ -1,363 +1,134 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{{ heading }}</title>
-
-  <!-- Meta -->
-  <meta name="description" content="Stream Telegram Movies - TgTamilLinks powered by LoveToRide" />
-  <meta name="theme-color" content="#111827" />
-
-  <!-- Icons -->
+  <title>{{ heading or file_name }}</title>
+  <meta name="description" content="Stream Telegram Movies - TgTamilLinks, powered by LoveToRide" />
+  <meta name="theme-color" content="#0f172a" />
   <link rel="icon" href="https://cdn.jsdelivr.net/gh/fyaz05/Resources@main/FileToLink/Thunder.jpg" />
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-
-  <!-- Plyr.io CSS - Modern video player -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-
-  <!-- FontAwesome -->
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Video.js CSS -->
+  <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-
   <style>
-    :root {
-      --primary-color: #f59e0b;
-      --primary-hover: #fbbf24;
-      --bg-color: #111827;
-      --card-bg: #1f2937;
-      --text-color: #e5e7eb;
-      --text-muted: #9ca3af;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Poppins', sans-serif;
-      line-height: 1.6;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 1.5rem;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin: 0.5rem 0;
-      color: white;
-      font-weight: 600;
-      line-height: 1.3;
-    }
-
-    .brand {
+    body { font-family: 'Poppins', sans-serif; background: #0f172a; color: #e5e7eb; }
+    .brand-gradient {
+      background: linear-gradient(90deg,#f59e0b, #fbbf24, #eab308, #f59e0b);
+      color: #23272f;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 999px;
       display: inline-block;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      background: rgba(245, 158, 11, 0.1);
-      padding: 0.3rem 0.8rem;
-      border-radius: 20px;
-      margin-top: 0.5rem;
-    }
-
-    .brand span {
-      color: var(--primary-color);
-    }
-
-    .player-container {
-      position: relative;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      margin-bottom: 1.5rem;
-      background: #000;
-    }
-
-    .plyr {
-      border-radius: 12px;
-      overflow: hidden;
-    }
-
-    .actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 2rem 0;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      background: rgba(245, 158, 11, 0.1);
-      color: var(--primary-color);
-      border: none;
-      font-weight: 500;
-      padding: 0.8rem 1.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 0.95rem;
-    }
-
-    .btn:hover {
-      background: rgba(245, 158, 11, 0.2);
-      color: var(--primary-hover);
-      transform: translateY(-2px);
-    }
-
-    .btn i {
-      font-size: 1.1rem;
-    }
-
-    .info-box {
-      background: var(--card-bg);
-      padding: 1.5rem;
-      border-radius: 12px;
-      margin: 2rem 0;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .info-box h3 {
-      margin-top: 0;
-      color: white;
-      font-size: 1.2rem;
-    }
-
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 3rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-
-    a:hover {
-      color: var(--primary-hover);
-      text-decoration: underline;
-    }
-
-    .toast {
-      display: none;
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--card-bg);
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      z-index: 1000;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
-      to { opacity: 1; transform: translateX(-50%) translateY(0); }
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .container {
-        padding: 1rem;
-      }
-      
-      h1 {
-        font-size: 1.5rem;
-      }
-      
-      .btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
-      }
-    }
-
-    /* Quality selector for mobile */
-    .plyr__menu__container [data-plyr="quality"] {
-      display: none;
-    }
-
-    @media (min-width: 768px) {
-      .plyr__menu__container [data-plyr="quality"] {
-        display: block;
-      }
+      font-size: .85rem;
+      margin-top: .5rem;
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <header>
-      <h1>{{ file_name }}</h1>
-      <div class="brand">TgTamilLinks <span>powered by LoveToRide</span></div>
+<body class="min-h-screen flex flex-col">
+  <div class="w-full max-w-2xl mx-auto p-4 flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="mb-6 border-b border-[#222] pb-4 text-center">
+      <h1 class="text-2xl md:text-3xl font-bold mb-2 text-white">{{ file_name }}</h1>
+      <div class="brand-gradient">TgTamilLinks <span class="text-[#d97706]">powered by LoveToRide</span></div>
     </header>
-
-    <!-- Video Player Container -->
-    <div class="player-container">
-      <video id="player" playsinline controls>
+    <!-- Video Player -->
+    <div class="mb-6 rounded-xl overflow-hidden shadow-md bg-black">
+      <video
+        id="videoPlayer"
+        class="video-js vjs-big-play-centered vjs-theme-forest"
+        controls
+        preload="auto"
+        width="100%"
+        height="420"
+        data-setup='{}'
+        poster="{{ poster or '' }}"
+      >
         <source src="{{ src }}" type="video/mp4" />
-        <!-- Fallback for browsers that don't support the video element -->
-        <a href="{{ src }}" download>Download video</a>
+        <source src="{{ src }}" type="video/x-matroska" />
+        Sorry, your browser cannot play this video. <a href="{{ src }}" class="underline text-yellow-400">Download video</a>
       </video>
     </div>
-
     <!-- Video Actions -->
-    <div class="actions">
-      <button class="btn" onclick="window.open('{{ src }}', '_blank')">
-        <i class="fas fa-external-link-alt"></i> Open in New Tab
+    <div class="flex flex-wrap justify-center gap-3 mb-8">
+      <button class="bg-yellow-500 hover:bg-yellow-400 text-black px-5 py-2 rounded-md font-semibold flex items-center gap-2 transition" onclick="window.open('{{ src }}', '_blank')">
+        <i class="fas fa-external-link-alt"></i> New Tab
       </button>
-      <button class="btn" onclick="window.location.href='{{ src }}'">
+      <button class="bg-gray-800 hover:bg-gray-700 text-yellow-400 px-5 py-2 rounded-md font-semibold flex items-center gap-2 transition" onclick="window.location.href='{{ src }}'">
         <i class="fas fa-download"></i> Download
       </button>
-      <button class="btn" onclick="copyLink('{{ src }}')">
+      <button class="bg-gray-800 hover:bg-gray-700 text-yellow-400 px-5 py-2 rounded-md font-semibold flex items-center gap-2 transition" onclick="copyLink('{{ src }}')">
         <i class="fas fa-copy"></i> Copy Link
       </button>
-      <button class="btn" onclick="toggleFullScreen()">
+      <button class="bg-gray-800 hover:bg-gray-700 text-yellow-400 px-5 py-2 rounded-md font-semibold flex items-center gap-2 transition" onclick="toggleFullscreen()">
         <i class="fas fa-expand"></i> Fullscreen
       </button>
     </div>
-
     <!-- Info Box -->
-    <div class="info-box">
-      <h3>Streaming Tips</h3>
-      <p>For best experience, use a high-speed internet connection. If video buffers, try pausing for a few moments to allow it to load.</p>
-      <p>Press <kbd>Space</kbd> to play/pause, <kbd>F</kbd> for fullscreen, <kbd>M</kbd> to mute.</p>
-    </div>
-
-    <footer>
-      ⚡ TgTamilLinks © <span id="year"></span> — powered by <a href="https://t.me/LoveToRide" target="_blank">LoveToRide</a>
+    <aside class="my-4 p-4 rounded-xl bg-[#192138] shadow">
+      <h3 class="text-lg font-semibold mb-2">Streaming Tips</h3>
+      <ul class="list-disc pl-4 text-sm">
+        <li>Best experienced on Chrome/Edge. MKV may not work in Safari/iOS.</li>
+        <li>If video buffers, pause and allow it to load, or try download.</li>
+        <li>Keyboard: <kbd class="px-1 py-0.5 bg-gray-700 rounded text-xs">Space</kbd> play/pause
+          <kbd class="px-1 py-0.5 bg-gray-700 rounded text-xs">F</kbd> fullscreen,
+          <kbd class="px-1 py-0.5 bg-gray-700 rounded text-xs">M</kbd> mute</li>
+      </ul>
+    </aside>
+    <!-- Footer -->
+    <footer class="mt-8 pt-4 border-t border-[#222] text-center text-sm text-gray-400">
+      <span id="year"></span> &copy; TgTamilLinks — Powered by
+      <a href="https://t.me/LoveToRide" class="text-yellow-400 hover:underline" target="_blank">LoveToRide</a>
     </footer>
   </div>
-
-  <!-- Toast Notification -->
-  <div class="toast" id="toast">Link copied to clipboard!</div>
-
-  <!-- Scripts -->
-  <!-- Plyr.io JS - Modern video player -->
-  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-  
+  <!-- Toast -->
+  <div id="toast" class="fixed left-1/2 -translate-x-1/2 bottom-10 z-50 px-5 py-3 bg-black/90 rounded-lg text-yellow-400 font-semibold opacity-0 transition">Copied link!</div>
+  <!-- Video.js library and theme -->
+  <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
   <script>
-    // Set current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Initialize Plyr video player
-    const player = new Plyr('#player', {
-      controls: [
-        'play-large', // The large play button in the center
-        'restart', // Restart playback
-        'rewind', // Rewind by the seek time (default 10 seconds)
-        'play', // Play/pause playback
-        'fast-forward', // Fast forward by the seek time (default 10 seconds)
-        'progress', // The progress bar and scrubber for playback and buffering
-        'current-time', // The current time of playback
-        'duration', // The full duration of the media
-        'mute', // Toggle mute
-        'volume', // Volume control
-        'captions', // Toggle captions
-        'settings', // Settings menu
-        'pip', // Picture-in-picture (currently Safari only)
-        'airplay', // Airplay (currently Safari only)
-        'fullscreen', // Toggle fullscreen
-      ],
-      settings: ['quality', 'speed'],
-      keyboard: { focused: true, global: true },
-      tooltips: { controls: true, seek: true },
-      seekTime: 10,
-      volume: 0.7,
-      debug: false
+    // Update year
+    document.getElementById('year').innerText = new Date().getFullYear();
+    // Video.js setup
+    window.player = videojs('videoPlayer', {
+      controls: true,
+      responsive: true,
+      fluid: true,
+      preload: 'auto'
     });
-
-    // Handle fullscreen button
-    function toggleFullScreen() {
-      if (player.fullscreen.active) {
-        player.fullscreen.exit();
+    // Fullscreen handling
+    function toggleFullscreen() {
+      if (window.player.isFullscreen()) {
+        window.player.exitFullscreen();
       } else {
-        player.fullscreen.enter();
+        window.player.requestFullscreen();
       }
     }
-
-    // Copy link function with toast notification
-    function copyLink(url) {
-      navigator.clipboard.writeText(url).then(() => {
-        const toast = document.getElementById('toast');
-        toast.style.display = 'block';
-        setTimeout(() => {
-          toast.style.display = 'none';
-        }, 2000);
-      }).catch(err => {
-        console.error('Failed to copy: ', err);
-        // Fallback for older browsers
-        const textarea = document.createElement('textarea');
-        textarea.value = url;
-        document.body.appendChild(textarea);
-        textarea.select();
-        try {
-          document.execCommand('copy');
-          const toast = document.getElementById('toast');
-          toast.textContent = 'Link copied to clipboard!';
-          toast.style.display = 'block';
-          setTimeout(() => {
-            toast.style.display = 'none';
-          }, 2000);
-        } catch (err) {
-          const toast = document.getElementById('toast');
-          toast.textContent = 'Failed to copy link';
-          toast.style.display = 'block';
-          setTimeout(() => {
-            toast.style.display = 'none';
-          }, 2000);
-        }
-        document.body.removeChild(textarea);
-      });
+    // Copy link + toast
+    function copyLink(link) {
+      navigator.clipboard.writeText(link).then(() => showToast('Link copied to clipboard!'));
     }
-
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 1800);
+    }
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
-      // Don't trigger if typing in an input field
-      if (document.activeElement.tagName === 'INPUT') return;
-      
+      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
       switch (e.key.toLowerCase()) {
-        case ' ':
-          e.preventDefault();
-          player.togglePlay();
-          break;
-        case 'f':
-          toggleFullScreen();
-          break;
-        case 'm':
-          player.muted = !player.muted;
-          break;
-        case 'arrowleft':
-          player.rewind();
-          break;
-        case 'arrowright':
-          player.forward();
-          break;
+        case ' ': e.preventDefault(); window.player.paused() ? window.player.play() : window.player.pause(); break;
+        case 'm': window.player.muted(!window.player.muted()); break;
+        case 'f': toggleFullscreen(); break;
+        case 'arrowleft': window.player.currentTime(window.player.currentTime() - 10); break;
+        case 'arrowright': window.player.currentTime(window.player.currentTime() + 10); break;
       }
     });
   </script>
