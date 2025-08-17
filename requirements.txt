@@ -1,9 +1,10 @@
 aiohttp
 cloudscraper
 Jinja2
-kurigram
+pyrofork
 motor
 psutil
 python-dotenv
 tgcrypto
+
 uvloop
